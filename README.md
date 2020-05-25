@@ -2,6 +2,8 @@ WebRTC based [Dark Chess](https://en.wikipedia.org/wiki/Dark_chess) chessboard.
 
 Open the page and send the generated link to a friend to play!
 
+Try it [here!](https://buonanno.tech/darkchess/public/index.html)
+
 # TODO
 
 - Testing
@@ -12,7 +14,9 @@ Open the page and send the generated link to a friend to play!
   - Pieces around a knight/bishop/rook
   - Pieces near king? (Give king two square vision?)
   - Keep "shadow" vision for squares that were visible last move
+  - Show possible boards/values for fogged squares
 
+- Show list of captured pieces
 - Drag pieces
 - Board letters
 - highlight last move
