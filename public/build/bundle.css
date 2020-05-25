@@ -1,0 +1,6 @@
+#board.svelte-1fkacau{max-width:80vh;margin-left:auto;margin-right:auto}.square.svelte-1fkacau{width:calc(100% / 8);float:left;user-select:none;height:0;padding-bottom:calc(100% / 8)}.dark.svelte-1fkacau{background-color:#b58863}.light.svelte-1fkacau{background-color:#f0d9b5}.selected.svelte-1fkacau{box-shadow:0px 0px 50px 20px rgba(20, 85, 30, 0.6) inset;outline:2px solid;outline-color:rgba(0, 0, 0, 0.1);outline-offset:-2px}.unreachable.svelte-1fkacau{background-color:#dcb;width:100%;height:0;padding-bottom:100%}.move-dest.svelte-1fkacau{box-shadow:0px 0px 50px 6px rgba(20, 85, 30, 0.3) inset}img.svelte-1fkacau{width:100%;user-select:none}h1.svelte-1fkacau,p.svelte-1fkacau{text-align:center;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;color:#333}p.svelte-1fkacau{font-size:1.4em}
+p.svelte-q6c3dw,a.svelte-q6c3dw{text-align:center;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;color:#333}
+
+/*# sourceMappingURL=bundle.css.map */
