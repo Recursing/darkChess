@@ -73,10 +73,12 @@
 
 <style>
   #board {
-    max-width: 80vh;
+    width: min(80vh, 95vw);
     margin-left: auto;
     margin-right: auto;
     background-color: #dcb;
+    height: 0;
+    padding-bottom: min(80vh, 95vw);
   }
   .square {
     width: calc(100% / 8);
@@ -109,22 +111,18 @@
     width: 100%;
     user-select: none;
   }
-  h1,
-  p {
+  h1 {
     text-align: center;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     color: #333;
-  }
-  p {
-    font-size: 1.4em;
   }
 </style>
 
 <WebRTCConnection bind:connection on:onMessage={onMessage} />
 {#if connection}
 <h1>
-  {#if myTurn}Click a piece to play!{:else}Waiting for other player...{/if}
+  {#if myTurn}Click a piece to play!{:else}Waiting for opponent...{/if}
 </h1>
 <div id="board">
   {#each squares as square, i}
