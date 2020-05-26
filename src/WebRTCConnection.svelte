@@ -4,12 +4,8 @@
 
   const dispatch = createEventDispatcher();
 
-  let connection = null;
+  export let connection = null;
   let out_url = null;
-
-  export function sendObject(obj) {
-    connection.send(JSON.stringify(obj));
-  }
 
   function connectToInitiator(pid) {
     // Please self host your own signaling server,
@@ -90,12 +86,15 @@
 {#if !connection}
   <p>Establishing connection...</p>
   {#if out_url}
-    <a
-      href={out_url}
-      on:click|preventDefault={() => navigator.clipboard
-          .writeText(out_url)
-          .then(() => alert('Link copied! Send it to opponent'))}>
-      {out_url}
-    </a>
+    <p>
+      Send this link to your opponent:
+      <a
+        href={out_url}
+        on:click|preventDefault={() => navigator.clipboard
+            .writeText(out_url)
+            .then(() => alert('Link copied! Send it to opponent'))}>
+        {out_url}
+      </a>
+    </p>
   {/if}
 {/if}

@@ -4,7 +4,7 @@
   export let myColor;
   let boardState = new BoardState(myColor);
   let myTurn = myColor === "white";
-  let sendObject;
+  let connection;
 
   function onMessage(message) {
     console.log("Got message");
@@ -36,7 +36,7 @@
       destinations = [];
       console.log("making move!");
       boardState = makeMove(boardState, selected, i);
-      sendObject([selected, i]);
+      connection.send(JSON.stringify([selected, i]));
       myTurn = false;
       selected = null;
       return;
@@ -51,12 +51,24 @@
   }
   let selected = null;
   let destinations = [];
+  function adjacentCoords(i) {
+    if (i % 8 == 0) {
+      return [i - 8, i - 7, i, i + 1, i + 8, i + 9];
+    }
+    if (i % 8 == 7) {
+      return [i - 8, i - 9, i, i - 1, i + 8, i + 7];
+    }
+    return [i - 9, i - 8, i - 7, i - 1, i, i + 1, i + 7, i + 8, i + 9];
+  }
+  $: adjacents = squares.flatMap((s, i) =>
+    s.color === "mine" ? adjacentCoords(i) : []
+  );
   $: possibleDestinations = squares.flatMap((s, i) =>
     getPossibleMoves(boardState, i)
   );
-  $: unreachables = squares.map(
-    (s, i) => s.color !== "mine" && !possibleDestinations.includes(i)
-  );
+  $: gameOver = squares.filter(s => s.name === "king").length !== 2;
+  $: isVisible = i =>
+    gameOver || adjacents.includes(i) || possibleDestinations.includes(i);
 </script>
 
 <style>
@@ -64,6 +76,7 @@
     max-width: 80vh;
     margin-left: auto;
     margin-right: auto;
+    background-color: #dcb;
   }
   .square {
     width: calc(100% / 8);
@@ -71,6 +84,7 @@
     user-select: none;
     height: 0;
     padding-bottom: calc(100% / 8);
+    transition: opacity 2s;
   }
   .dark {
     background-color: #b58863;
@@ -84,11 +98,8 @@
     outline-color: rgba(0, 0, 0, 0.1);
     outline-offset: -2px;
   }
-  .unreachable {
-    background-color: #dcb;
-    width: 100%;
-    height: 0;
-    padding-bottom: 100%;
+  .fogged {
+    opacity: 0;
   }
 
   .move-dest {
@@ -110,7 +121,8 @@
   }
 </style>
 
-<WebRTCConnection bind:sendObject on:onMessage={onMessage} />
+<WebRTCConnection bind:connection on:onMessage={onMessage} />
+{#if connection}
 <h1>
   {#if myTurn}Click a piece to play!{:else}Waiting for other player...{/if}
 </h1>
@@ -122,10 +134,9 @@
       class:light={1 - (Math.floor((i * 9) / 8) % 2)}
       class:selected={selected === i}
       class:move-dest={destinations.includes(i)}
+      class:fogged={!isVisible(i)}
       on:click={() => onClick(i)}>
-      {#if unreachables[i]}
-        <div class="unreachable" />
-      {:else if square.color}
+      {#if square.color}
         <img
           src={getImage(square)}
           alt={square.name}
@@ -134,8 +145,5 @@
       {/if}
     </div>
   {/each}
-  <p>
-    See rules on
-    <a href="https://en.wikipedia.org/wiki/Dark_chess">wikipedia!</a>
-  </p>
 </div>
+{/if}
